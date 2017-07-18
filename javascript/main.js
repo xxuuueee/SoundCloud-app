@@ -1,166 +1,102 @@
-/* 1. Search the song*/
-var UI = {};
-var soundCloudAPI = {};
+/* CURRENTLY IN: styles/main.css */
+html, body {
+	height: 100%;
+	width: 100%;
+	min-height: 100%;
+	background: linear-gradient(to right, #4AC29A, #BDFFF3);
 
-
-var search = document.querySelector('.input-search');
-var submit = document.querySelector('.js-submit');
-var reset = document.querySelector('#reset');
-		
-reset.addEventListener('click',function(){
-	soundCloudAPI.removeSavedPlaylist();
-		});
-
-search.addEventListener('keyup', function(e){
-	if(e.which==13){
-		UI.enterPress(search.value);
-	}
-})
-
-submit.addEventListener('click', function(){
-	UI.SubmitClick(search.value);
-})
-
-
-
-UI.enterPress = function(searchVal){
-
-	soundCloudAPI.getTrack(searchVal);
-};
-
-
-
-UI.SubmitClick = function(searchVal){
-	soundCloudAPI.getTrack(searchVal);
-
-};
+}
 
 
 
 
+#soundcloud-player .col {
 
+	position: fixed;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+}
 
-
-
-
-
-soundCloudAPI.init = function() {
-	SC.initialize({
-  client_id: 'cd9be64eeb32d1741c17cb39e41d254d'
-});
-
-};
-
-soundCloudAPI.init();
-
-
-
-/* 2. query soundcloud api*/
-
-soundCloudAPI.getTrack = function(inputValue){
-	// find all sounds of buskers licensed under 'creative commons share alike'
-SC.get('/tracks', {
-  q: inputValue
-}).then(function(tracks) {
-  console.log(tracks);
- 
-  
-  soundCloudAPI.renderCards(tracks);
-});
-
-
-
-};
-
-
-
-/* 3. display the cards*/
-soundCloudAPI.renderCards = function(tracks){
+#soundcloud-player .col-left {
+	width: 20%;
+	height: 100%;
+	background-color: #4AC29A;
 	
-	var searchResults = document.querySelector(".search-results");
+	overflow: auto;
 
+	position: fixed;
+	left: 0;
+	top: 0;
 
-	tracks.forEach(function(track){
-		
+	min-width: 200px;
+	z-index: 1;
+}
 
-		/*cards*/
-		var card = document.createElement('div');
-		card.classList.add("card");
-		
+#title h1{
+	
+	font-family: 'Permanent Marker', cursive;
 
-		
+	letter-spacing:2px;
+	font-size: 9vw;
+	padding-left: 20%;
+	position:center;
+	
+}
 
-		/*images*/
-		var imageDiv = document.createElement('div');
-		imageDiv.classList.add('image');
+#soundcloud-player #reset{
+	margin-top: 5%;
+	width: 20%;
+	font-family: 'Permanent Marker', cursive;
+	background-color:#c2185b;
+	color:white;
 
-		var image_img = document.createElement('img');
-		image_img.classList.add("image-img");
-		image_img.src = track.artwork_url || 'javascript/images.jpeg';
-		
-
-		
-		
-		/*content*/
-		var content = document.createElement('div');
-		content.classList.add("content");
-
-		var header = document.createElement('div');
-		header.classList.add("header");
-
-
-		header.innerHTML = "<a href=\"" + track.permalink_url + "\" target='_blank'> \"" + track.title + "\" </a>";
-
-		/*button*/
-		var button = document.createElement('div');
-		button.classList.add("ui", "bottom", "attached", "button", "js-button");
-		button.innerHTML = "<i class='add icon'></i> <span>Add to playlist</span>";
-		button.addEventListener('click', function(){
-			soundCloudAPI.addToPlaylist(track);
-			});
-
-		
-
-		/*appending childs*/
-		searchResults.appendChild(card);
-		searchResults.appendChild(reset);
-		card.appendChild(imageDiv);
-		imageDiv.appendChild(image_img);
-		card.appendChild(content);
-		content.appendChild(header);
-		card.appendChild(button);
-
-	});
-
+	
 
 	
 	
 }
 
-
-/* 4. add to playlist and play*/
-soundCloudAPI.addToPlaylist = function(track){
-	SC.oEmbed(track.permalink_url, {
-    			auto_play: true
-				}).then(function(embed){
-  		var playlist = document.querySelector(".js-playlist");
+#soundcloud-player .col-right {
 	
-
-	var box = document.createElement('div');
-	box.innerHTML = embed.html;
-
-	playlist.insertBefore(box, playlist.firstChild);
-	localStorage.setItem("key", playlist.innerHTML);
-});
-			
+	width: 100%;
+	height: 100%;
 	
-};		
-var playlist = document.querySelector(".js-playlist");
-playlist.innerHTML = localStorage.getItem("key");
+	overflow: auto;
 
-soundCloudAPI.removeSavedPlaylist = function(){
-	playlist.innerHTML=localStorage.clear();
-};
+	position: fixed;
+	left: 0;
+	top: 0;
 
+	box-sizing: border-box;
+	padding-left: 20%;
+}
 
+#soundcloud-player .main {
 
+	box-sizing: border-box;
+	padding: 30px;
+	margin: 30px;
+	margin-top: 0%;
+}
+
+#soundcloud-player .input {
+	width: 100%;
+}
+
+#soundcloud-player .input-search {
+	width: 100%;
+	display: block;
+	font-family: 'Permanent Marker', cursive;
+}
+
+#soundcloud-player .search.icon {
+	pointer-events: initial;
+	cursor: pointer;
+}
+
+#soundcloud-player .search-results {
+	justify-content: center;
+    margin-top: 30px;
+}
