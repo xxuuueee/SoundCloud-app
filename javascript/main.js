@@ -147,16 +147,20 @@ soundCloudAPI.renderCards = function(tracks){
 /* 4. add to playlist and play*/
 soundCloudAPI.addToPlaylist = function(track){
 	SC.oEmbed(track.permalink_url, {
-    			auto_play: true
+    			auto_play: false
 				}).then(function(embed){
   		var playlist = document.querySelector(".js-playlist");
 	
 
 	var box = document.createElement('div');
 	box.innerHTML = embed.html;
+	playlist.appendChild(box);
 
-	playlist.insertBefore(box, playlist.firstChild);
+	//playlist.insertBefore(box, playlist.firstChild);
 	localStorage.setItem("key", playlist.innerHTML);
+
+
+
 });
 			
 	
