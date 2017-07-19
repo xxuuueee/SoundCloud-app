@@ -46,6 +46,10 @@ html, body {
 }
 
 #soundcloud-player #reset{
+	position:fixed;
+	top:10%;
+	left:20%;
+	
 	margin-top: 5%;
 	width: 20%;
 	font-family: 'Permanent Marker', cursive;
@@ -78,7 +82,7 @@ html, body {
 	box-sizing: border-box;
 	padding: 30px;
 	margin: 30px;
-	margin-top: 0%;
+	margin-top: 2%;
 }
 
 #soundcloud-player .input {
